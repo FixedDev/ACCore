@@ -11,5 +11,19 @@
 
     <artifactId>Commons-Bukkit</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>dev.akarcraft</groupId>
+            <artifactId>API-Bukkit</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>dev.akarcraft</groupId>
+            <artifactId>Commons-Shared</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
 </project>

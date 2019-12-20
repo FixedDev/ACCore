@@ -11,5 +11,12 @@
 
     <artifactId>Commons-Shared</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>dev.akarcraft</groupId>
+            <artifactId>API-Shared</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 </project>
