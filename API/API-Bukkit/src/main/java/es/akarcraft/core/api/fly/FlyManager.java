@@ -1,4 +1,4 @@
-package es.akarcraft.core.fly;
+package es.akarcraft.core.api.fly;
 
 import org.bukkit.OfflinePlayer;
 
