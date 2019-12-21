@@ -21,6 +21,15 @@ public class FlyCommands implements CommandClass {
     private FlyManager flyManager;
     private Plugin plugin;
 
+    public FlyCommands(FlyManager flyManager, Plugin plugin) {
+        this.flyManager = flyManager;
+        this.plugin = plugin;
+    }
+
+    public CommandAction getMainCommand() {
+        return new MainCommand();
+    }
+
     public class MainCommand implements CommandAction {
         @Override
         public boolean execute(CommandContext commandContext) throws CommandException {
