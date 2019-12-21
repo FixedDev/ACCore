@@ -21,7 +21,7 @@ public class TimeUtils {
     }
 
     public static Duration parseDuration(String stringDuration){
-        Duration sum = Duration.of(0, ChronoUnit.SECONDS);
+        Duration sum = Duration.ZERO;
         String number = "";
 
         for (final char c : stringDuration.toCharArray()) {
