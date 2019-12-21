@@ -29,7 +29,7 @@ public class TimeUtils {
                 number = number + c;
             } else {
                 if(units.containsKey(c + "") && !number.isEmpty()) {
-                    long parsedLong = Long.parseLong(number.toString());
+                    long parsedLong = Long.parseLong(number);
 
                     ChronoUnit unit = units.get(c + "");
 
