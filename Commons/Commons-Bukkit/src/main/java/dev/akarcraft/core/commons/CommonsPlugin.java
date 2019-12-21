@@ -38,7 +38,7 @@ public class CommonsPlugin extends JavaPlugin {
 
         CommandManager commandManager = new SimpleCommandManager(new BukkitAuthorizer(), registry);
 
-        commandManager = new BukkitCommandManager(commandManager, this.getName());
+        this.commandManager = new BukkitCommandManager(commandManager, this.getName());
         parametricCommandBuilder = new ReflectionParametricCommandBuilder();
     }
 
