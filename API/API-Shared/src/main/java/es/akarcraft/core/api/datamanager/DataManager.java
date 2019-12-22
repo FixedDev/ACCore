@@ -15,5 +15,5 @@ public interface DataManager<K, O> {
 
     ListenableFuture<O> deleteObject(K key);
 
-    ListenableFuture<?> save(K key, O object);
+    ListenableFuture<?> save(O object);
 }
