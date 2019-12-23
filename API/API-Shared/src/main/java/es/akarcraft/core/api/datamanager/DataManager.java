@@ -34,7 +34,7 @@ public interface DataManager<K, O> {
     /**
      * Finds a list of objects using a provided list of {@param keys} on the datastore
      * @param keys The keys to search on the datastore
-     * @return The list of the objects found in the same order as the keys
+     * @return The list of the objects found with the keys as id
      */
     List<O> getObjects(List<K> keys);
 
@@ -42,7 +42,7 @@ public interface DataManager<K, O> {
      * The principal behaviour of this method is the same as {@see getObjects(List<K>)}
      * but it's executed on another thread
      * @param keys The keys to find
-     * @return A future object that contains the list of the objects found in the same order as the keys
+     * @return A future object that contains the list of the objects found with the keys as id
      */
     ListenableFuture<List<O>> getObjectsAsync(List<K> keys);
 
