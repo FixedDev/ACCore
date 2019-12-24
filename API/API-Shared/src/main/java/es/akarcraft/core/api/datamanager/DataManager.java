@@ -46,7 +46,7 @@ public interface DataManager<K, O> {
      */
     ListenableFuture<List<O>> getObjectsAsync(List<K> keys);
 
-    ListenableFuture<O> deleteObject(K key);
+    ListenableFuture<?> deleteObject(K key);
 
     ListenableFuture<?> save(O object);
 }
