@@ -1,4 +1,4 @@
-package es.akarcraft.core.api.datamanager;
+package es.akarcraft.core.api.datamanager.mongo;
 
 import com.google.common.reflect.TypeToken;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -7,6 +7,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.ReplaceOptions;
+import es.akarcraft.core.api.datamanager.DataManager;
+import es.akarcraft.core.api.datamanager.IdGetter;
 
 import java.util.ArrayList;
 import java.util.List;
