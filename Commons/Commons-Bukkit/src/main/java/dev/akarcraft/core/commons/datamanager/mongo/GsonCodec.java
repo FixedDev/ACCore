@@ -1,4 +1,4 @@
-package es.akarcraft.core.api.datamanager.mongo;
+package dev.akarcraft.core.commons.datamanager.mongo;
 
 import com.google.gson.Gson;
 import org.bson.BsonReader;

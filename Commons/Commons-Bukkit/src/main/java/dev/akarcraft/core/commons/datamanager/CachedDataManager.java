@@ -1,4 +1,4 @@
-package es.akarcraft.core.api.datamanager;
+package dev.akarcraft.core.commons.datamanager;
 
 import com.google.common.util.concurrent.ListenableFuture;
 

@@ -1,4 +1,4 @@
-package es.akarcraft.core.api.datamanager;
+package dev.akarcraft.core.commons.datamanager;
 
 public interface IdGetter<O, K> {
     K getFromObject(O object);
