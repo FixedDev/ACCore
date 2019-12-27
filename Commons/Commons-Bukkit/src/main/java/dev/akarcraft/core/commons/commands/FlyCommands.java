@@ -7,6 +7,7 @@ import me.fixeddev.ebcm.CommandContext;
 import me.fixeddev.ebcm.exception.CommandException;
 import me.fixeddev.ebcm.parametric.CommandClass;
 import me.fixeddev.ebcm.parametric.annotation.ACommand;
+import me.fixeddev.ebcm.parametric.annotation.Injected;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -81,7 +82,7 @@ public class FlyCommands implements CommandClass {
     }
 
     @ACommand(names = "info", permission = "akarcraft.fly.admin")
-    public boolean infoCommand(CommandSender sender) {
+    public boolean infoCommand(@Injected CommandSender sender) {
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', ""));
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&9&lServer> &fComandos para el modo de vuelo:"));
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&f• &e/fly set <jugador> <tiempo> &6&l- Fijar minutos de vuelo."));
@@ -94,7 +95,7 @@ public class FlyCommands implements CommandClass {
     }
 
     @ACommand(names = "set", permission = "akarcraft.fly.admin")
-    public boolean setCommand(CommandSender sender, OfflinePlayer target, String time) {
+    public boolean setCommand(@Injected CommandSender sender, OfflinePlayer target, String time) {
         Duration timeToAdd = TimeUtils.parseDuration(time);
 
         flyManager.setFlyTime(target, timeToAdd);
@@ -111,7 +112,7 @@ public class FlyCommands implements CommandClass {
     }
 
     @ACommand(names = {"add", "agregar"}, permission = "akarcraft.fly.admin")
-    public boolean addCommand(CommandSender sender, OfflinePlayer target, String time) {
+    public boolean addCommand(@Injected CommandSender sender, OfflinePlayer target, String time) {
         Duration timeToAdd = TimeUtils.parseDuration(time);
 
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
@@ -130,7 +131,7 @@ public class FlyCommands implements CommandClass {
     }
 
     @ACommand(names = "clear", permission = "akarcraft.fly.admin")
-    public boolean clearCommand(CommandSender sender, OfflinePlayer target) {
+    public boolean clearCommand(@Injected CommandSender sender, OfflinePlayer target) {
         flyManager.setFlyTime(target, Duration.ZERO);
 
         if (!target.isOnline()) {
@@ -145,7 +146,7 @@ public class FlyCommands implements CommandClass {
     }
 
     @ACommand(names = {"look"}, permission = "akarcraft.fly.admin")
-    public boolean lookCommand(CommandSender sender, OfflinePlayer target) {
+    public boolean lookCommand(@Injected CommandSender sender, OfflinePlayer target) {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             sender.sendMessage(ChatColor.BLUE + "" + ChatColor.BOLD + "Server> " + ChatColor.RESET +
                     target.getName() + " tiene " + TimeUtils.durationToHumanTime(flyManager.getFlyTime(target)) + " minutos de vuelo.");

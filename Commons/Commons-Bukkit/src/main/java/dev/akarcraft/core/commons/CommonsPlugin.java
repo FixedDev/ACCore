@@ -12,7 +12,7 @@ import me.fixeddev.ebcm.bukkit.parameter.provider.BukkitModule;
 import me.fixeddev.ebcm.parameter.provider.ParameterProviderRegistry;
 import me.fixeddev.ebcm.parametric.ParametricCommandBuilder;
 import me.fixeddev.ebcm.parametric.ReflectionParametricCommandBuilder;
-import me.fixeddev.ebcm.part.ArgumentPart;
+import me.fixeddev.ebcm.part.InjectedValuePart;
 import me.fixeddev.ebcm.part.SubCommandPart;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -49,8 +49,8 @@ public class CommonsPlugin extends JavaPlugin {
 
         Command mainCommand = ImmutableCommand.builder(CommandData.builder("fly")
                 .setAliases(Arrays.asList("volar")))
-                .addPart(ArgumentPart.builder("sender", CommandSender.class)
-                        .setConsumedArguments(0)
+                .addPart(InjectedValuePart.builder("sender", CommandSender.class)
+                        .setInjectedName(BukkitCommandManager.SENDER_NAMESPACE)
                         .setRequired(true)
                         .build())
                 .addPart(SubCommandPart.builder("subcommand")

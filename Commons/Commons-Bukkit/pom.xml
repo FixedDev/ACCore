@@ -55,7 +55,7 @@
         <dependency>
             <groupId>me.fixeddev</groupId>
             <artifactId>EBCM-Bukkit</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.1</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
