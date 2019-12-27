@@ -39,7 +39,7 @@ public abstract class DelegateCachedDataManager<K, O> implements CachedDataManag
     }
 
     @Override
-    public ListenableFuture<O> deleteObject(K key) {
+    public ListenableFuture<?> deleteObject(K key) {
         return delegate.deleteObject(key);
     }
 
