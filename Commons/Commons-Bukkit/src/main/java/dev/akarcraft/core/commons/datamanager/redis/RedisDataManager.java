@@ -14,24 +14,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * The RedisDataManager has a limitation, it is that only supports String as key, nothing else
- *
- * @param <O> The object type
- */
-public class RedisDataManager<O> implements DataManager<String, O> {
+public class RedisDataManager<K, O> implements DataManager<K, O> {
 
     private JedisPool jedisPool;
     private ListeningExecutorService executorService;
 
-    private IdGetter<O, String> idGetter;
+    private IdGetter<O, K> idGetter;
 
     private Gson gson;
     private Type type;
 
     private String namespace;
 
-    public RedisDataManager(JedisPool pool, ListeningExecutorService service, TypeToken<O> objectType, Gson gson, String namespace, IdGetter<O, String> idGetter) {
+    public RedisDataManager(JedisPool pool, ListeningExecutorService service, TypeToken<O> objectType, Gson gson, String namespace, IdGetter<O, K> idGetter) {
         jedisPool = pool;
         executorService = service;
 
@@ -44,14 +39,14 @@ public class RedisDataManager<O> implements DataManager<String, O> {
     }
 
     @Override
-    public Optional<O> getObject(String key) {
+    public Optional<O> getObject(K key) {
         try (Jedis jedis = jedisPool.getResource()) {
             return getObject(key, jedis);
         }
     }
 
-    private Optional<O> getObject(String key, Jedis jedis) {
-        String redisKey = namespace + ":" + key;
+    private Optional<O> getObject(K key, Jedis jedis) {
+        String redisKey = namespace + ":" + idGetter.toString(key);
 
         String jsonObject = jedis.get(redisKey);
         if (jsonObject == null || jsonObject.equals("nil")) {
@@ -64,16 +59,16 @@ public class RedisDataManager<O> implements DataManager<String, O> {
     }
 
     @Override
-    public ListenableFuture<O> getObjectAsync(String key) {
+    public ListenableFuture<O> getObjectAsync(K key) {
         return executorService.submit(() -> getObject(key).orElse(null));
     }
 
     @Override
-    public List<O> getObjects(List<String> keys) {
+    public List<O> getObjects(List<K> keys) {
         List<O> objects = new ArrayList<>();
 
         try (Jedis jedis = jedisPool.getResource()) {
-            for (String key : keys) {
+            for (K key : keys) {
                 getObject(key, jedis).ifPresent(objects::add);
             }
         }
@@ -82,15 +77,15 @@ public class RedisDataManager<O> implements DataManager<String, O> {
     }
 
     @Override
-    public ListenableFuture<List<O>> getObjectsAsync(List<String> keys) {
+    public ListenableFuture<List<O>> getObjectsAsync(List<K> keys) {
         return executorService.submit(() -> getObjects(keys));
     }
 
     @Override
-    public ListenableFuture<?> deleteObject(String key) {
+    public ListenableFuture<?> deleteObject(K key) {
         return executorService.submit(() -> {
             try (Jedis jedis = jedisPool.getResource()) {
-                jedis.del(key);
+                jedis.del(idGetter.toString(key));
             }
         });
     }
@@ -100,7 +95,7 @@ public class RedisDataManager<O> implements DataManager<String, O> {
         return executorService.submit(() -> {
             try (Jedis jedis = jedisPool.getResource()) {
                 String jsonObject = gson.toJson(object);
-                String id = idGetter.getFromObject(object);
+                String id = idGetter.toString(idGetter.getFromObject(object));
 
                 jedis.set(namespace + ":" + id, jsonObject);
             }
