@@ -12,3 +12,5 @@ todas las funcionalidades del anterior
 Las tecnologias usadas por el momento son las siguientes, las cuales pueden cambiar con el tiempo:
  * Java
  * Maven
+ * MongoDB
+ * GSON
