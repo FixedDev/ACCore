@@ -42,6 +42,7 @@ public class FlyManagerImpl implements FlyManager, Listener {
         this.actionBar = actionBar;
 
         Bukkit.getScheduler().runTaskTimer(plugin, new UpdatePlayerFlyTimeTask(),1,1);
+        Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
     @Override
