@@ -9,6 +9,9 @@ import org.bson.codecs.DecoderContext;
 import org.bson.codecs.EncoderContext;
 import org.bson.codecs.configuration.CodecRegistry;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStreamWriter;
+
 public class GsonCodec<T> implements Codec<T> {
 
     private Class<T> type;
@@ -24,15 +27,18 @@ public class GsonCodec<T> implements Codec<T> {
     @Override
     public T decode(BsonReader bsonReader, DecoderContext decoderContext) {
         RawBsonDocument raw = bsonDocumentCodec.decode(bsonReader, decoderContext);
-
+        
         return gson.fromJson(raw.toJson(), type);
     }
 
     @Override
     public void encode(BsonWriter bsonWriter, T object, EncoderContext encoderContext) {
-        String json = gson.toJson(object, type);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        OutputStreamWriter writer = new OutputStreamWriter(outputStream);
 
-        RawBsonDocument bsonDocument = RawBsonDocument.parse(json);
+        gson.toJson(object, type, writer);
+
+        RawBsonDocument bsonDocument = new RawBsonDocument(outputStream.toByteArray());
         bsonDocumentCodec.encode(bsonWriter, bsonDocument, encoderContext);
     }
 
